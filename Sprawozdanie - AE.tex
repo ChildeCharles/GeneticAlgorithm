@@ -1,0 +1,238 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{polski}
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{verbatim}
+\hoffset=-3.0cm                 % Mniejszy lewy margines
+\textwidth=18cm                 % szerzej
+\evensidemargin=0pt
+
+\voffset=-3cm                   % Mniejszy gorny margines
+\textheight=27cm                % szerzej wzdluz
+
+\usepackage{listings}
+% Listingi
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	frame=L,
+	xleftmargin=0pt,
+	language=HTML,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	identifierstyle=\color{black}
+}
+
+\setlength{\parindent}{0pt}             % No paragraph indentation
+\setlength{\parskip}{\medskipamount}    % Space between paragraphs
+\raggedbottom   
+
+
+\title{POLITECHNIKA WARSZAWSKA \\ WYDZIAŁ ELEKTRYCZNY \\}
+\author{Karol Mąkosa}
+\date{\today}
+
+\begin{document}
+	\thispagestyle{empty}
+	\maketitle
+	\date{}
+	\section{Treść zadania}
+	Napisać program umożliwiający znalezienie maksimum funkcji dopasowania jednej 
+	zmiennej określonej dla liczb całkowitych w zadanym zakresie przy pomocy 
+	elementarnego algorytmu genetycznego (reprodukcja z użyciem nieproporcjonalnej 
+	ruletki, krzyżowanie proste, mutacja równomierna). Program powinien umożliwiać 
+	użycie różnych funkcji dopasowania, populacji o różnej liczebności oraz różnych 
+	parametrów operacji genetycznych (krzyżowania i mutacji). Program powinien 
+	zapewnić wizualizację wyników w postaci wykresów średniego, maksymalnego 
+	i minimalnego przystosowania dla kolejnych populacji oraz wykresu funkcji 
+	w zadanym przedziale. 
+	
+	Program przetestować dla funkcji$ f(x)= -0.25x^2 + 5x + 6 $ dla $x= -1, 0, ... 21 $
+
+	\section{Instrukcja działania programu}
+		\subsection{Okno główne programu}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.55]{okno.png}
+			\end{figure}
+		\newpage
+		\subsection{Opis okna programu}
+				\begin{enumerate}
+					\item Informacje o obecnej populacji i o najlepiej przystosowanym elemencie
+					\item Pola do ustawiania liczebności populacji i prawdopodobieństw -- krzyżowania i mutacji
+					\item Przyciski sterujące
+					\item Wykresy: obecnej populacji, minimalnego, średniego i maksymalnego przystosowania oraz informacja o iteracji algorytmu
+				\end{enumerate}	
+		\subsection{Zmiana ustawień programu}
+			W programie okienkowym można zmieniać liczebność populacji oraz prawdopodobieństwa krzyżowania i mutacji.
+			Aby zmienić funkcję lub przedział, na którym badamy funkcję, należy zmodyfikować początkowe linie pliku \texttt{Population.py}
+	
+		\subsection{Przykładowy sposób użycia}
+		Aby poprawnie użyć programu należy:
+		\begin{enumerate}
+		\item Ustawić dane
+		\item Zaakcpetować ustawienia wciskając przycisk -- \texttt{Zastosuj}
+		\item Zaznaczyć lub odznaczyć opcję rysowania wykresów -- \texttt{rysuj wykresy}
+		\item Wybrać sposób tworzenia kolejnych generacji populacji:
+			\begin{enumerate}
+				\item Jednorazowo, wciskając \texttt{Jedna generacja}
+				\item Automatycznie, wciskając \texttt{Automatyczna generacja}
+			\end{enumerate}
+			\textit{Automatyczna generacja zakończy się, gdy w przeciągu 50 generacji nie zmieni się największe znalezione przystosowanie}
+		\end{enumerate}
+		
+	\section{Opis eksperymentów}
+	Eksperymenty przeprowadzone były dla funkcji $f(x) = -0.25x^2 + 5x + 6$, dla $x = -1, 0, ..., 21$. Maksymalne przystosowanie dla niej jest osiągane przy $x = 10$ i wynosi $31$. W poszczególnych etapach eksperymentów zmieniały się liczebność populacji i wartości krzyżowania mutacji
+	
+		\subsection{Różna liczebność populacji}
+			Eksperymenty badające wpływ liczebności na wyniki algorytmu genetycznego wykonywane były przy prawdopodobieństwie mutacji równym 0,01 i prawdopodobieństwie krzyżowania równym 1. W tabeli umieszczone zostały:'minimalne, maksymalne i średnie przystosowanie danej populacji oraz największe znalezione dopasowanie oraz jego osobnik.
+			\subsubsection{Populacja: 6 osobników}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline 
+					iteracja &  min &  max & avg & global max &  X\\
+					\hline
+					1 & 6 & 30 & 17.54 & 30 & 12\\
+					\hline
+					2 & 6 & 30.75 & 18.38 & 30.75 & 11\\
+					\hline
+					3 & 0.75 & 30.75 & 15.0 & 30.75 & 11\\
+					\hline
+					4 & 0.75 & 22 &  9.5 & 30.75 & 11\\
+					\hline
+					5 & 0.75 & 24.75 & 14.83 & 30.75 & 11\\
+					\hline
+					6 & 0.75 & 24.75 & 8.08 & 30.75 & 11\\
+					\hline
+					7 & 0.75 & 24.75 & 13.42 & 30.75 & 11\\
+					\hline
+					8 & 0.75 & 27 & 13.79 & 30.75 & 11\\
+					\hline
+					9 & 0.75 & 24.75 & 8.79 & 30.75 & 11\\
+					\hline
+					10 & 0.75 & 24.75 & 12.79 & 30.75 & 11\\
+					\hline
+				\end{tabular} \\
+				Rzeczywiste maksimum funkcji znaleziono po ok. 250 generacjach.
+			\subsubsection{Populacja: 50 osobników}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline 
+					iteracja &  min &  max & avg & global max &  X\\
+					\hline
+					1 & 0.75 & 31 & 19.43 & 31 & 10\\
+					\hline
+					2 & 0.75 & 31 & 18.7 & 31 & 10\\
+					\hline
+					3 & 0.75 & 31 & 19.25 & 31 & 10\\
+					\hline
+					4 & 0.75 & 30.75 & 17.77 & 31 & 10\\
+					\hline
+					5 & 0.75 & 30.75 & 18.5 & 31 & 10\\
+					\hline
+					6 & 0.75 & 30.75 & 20.03 & 31 & 10\\
+					\hline
+					7 & 0.75 & 30.75 & 18.43 & 31 & 10\\
+					\hline
+					8 & 0.75 & 31 & 17.68 & 31 & 10\\
+					\hline
+					9 & 0.75 & 30.75 & 17.21 & 31 & 10\\
+					\hline
+					10 & 0.75 & 30.75 & 16.94 & 31 & 10\\
+					\hline
+				\end{tabular} \\
+				Rzeczywiste maksimum funkcji zostało znalezione już w 1 generacji.
+			\subsection{Różne prawdopodobieństwa krzyżowania i mutacji}
+				Eksperymenty przeprowadzone będą dla populacji 10 osobników.
+				\subsubsection{Krzyżowanie: 1, Mutacja: 0.05}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline 
+					iteracja &  min &  max & avg & global max &  X\\
+					\hline
+					1 & 0.75 & 30.75 & 15.97 & 30.75 & 9\\
+					\hline
+					2 & 0.75 & 30.75 & 15.15 & 30.75 & 11\\
+					\hline
+					3 & 0.75 & 30.75 & 8.75 & 30.75 & 9\\
+					\hline
+					4 & 0.75 & 30.75 & 15.95 & 30.75 & 9\\
+					\hline
+					5 & 0.75 & 30 & 16.1 & 30.75 & 9\\
+					\hline
+					6 & 0.75 & 30.75 & 15.7 & 30.75 & 9\\
+					\hline
+					7 & 0.75 & 30.75 & 17.43 & 30.75 & 9\\
+					\hline
+					8 & 0.75 & 30.75 & 17.12 & 30.75 & 9\\
+					\hline
+					9 & 0.75 & 30.75 & 18.73 & 30.75 & 9\\
+					\hline
+					10 & 10.75 & 31 & 19.0 & 31 & 10\\
+					\hline
+				\end{tabular} \\
+				Rzeczywiste maksimum znaleziono w generacji 10.
+				\subsubsection{Krzyżowanie: 0.8, Mutacja: 0.1}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline 
+					iteracja &  min &  max & avg & global max &  X\\
+					\hline
+					1 & 0.75 & 30.75 & 13.95 & 30.75 & 11\\
+					\hline
+					2 & 0.75 & 30.75 & 14.38 & 30.75 & 11\\
+					\hline
+					3 & 0.75 & 30.75 & 17.98 & 30.75 & 11\\
+					\hline
+					4 & 6 & 30.75 & 20.4 & 30.75 & 11\\
+					\hline
+					5 & 15 & 30.75 & 22.43 & 30.75 & 11\\
+					\hline
+					6 & 0.75 & 30.75 & 18.15 & 30.75 & 11\\
+					\hline
+					7 & 0.75 & 30.75 & 20.02 & 30.75 & 11\\
+					\hline
+					8 & 0.75 & 30.75 & 15.64 & 30.75 & 11\\
+					\hline
+					9 & 0.75 & 30.75 & 22.02 & 30.75 & 11\\
+					\hline
+					10 & 0.75 & 30 & 15.22 & 30.75 & 11\\
+					\hline
+				\end{tabular}\\
+				Rzeczywiste maksimum znaleziono w 20 generacji
+				\subsubsection{Krzyżowanie: 0.5, Mutacja: 0.03}
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline 
+					iteracja &  min &  max & avg & global max &  X\\
+					\hline
+					1 & 6 & 30.75 & 22.95 & 30.75 & 9\\
+					\hline
+					2 & 6 & 30.75 & 22.48 & 30.75 & 9\\
+					\hline
+					3 & 6 & 30.75 & 20.05 & 30.75 & 9\\
+					\hline
+					4 & 6 & 30.75 & 20.55 & 30.75 & 9\\
+					\hline
+					5 & 0.75 & 31 & 17.7 & 31 & 10\\
+					\hline
+					6 & 0.75 & 30.75 & 21.1 & 31 & 10\\
+					\hline
+					7 & 0.75 & 30.75 & 18.73 & 31 & 10\\
+					\hline
+					8 & 0.75 & 30.75 & 19.52 & 31 & 10\\
+					\hline
+					9 & 0.75 & 30.75 & 18.73 & 31 & 10\\
+					\hline
+					10 & 10.75 & 30.75 & 19.73 & 31 & 10\\
+					\hline
+				\end{tabular} \\
+				Rzeczywiste maksimum znaleziono w 5 generacji
+	\section{Wnioski}
+	Na zróżnicowanie wyników algorytmu genetycznego mają wpływ:
+	\begin{itemize}
+		\item Liczebność populacji -- ma ona bardzo duży wpływ na szybkość znalezienia wyniku. Im większa ona jest tym szybciej algorytm znajduje rozwiązanie.
+		\item Prawdopodobieństwo mutacji -- wprowadza losowe zmiany między populacjami. Nie może być ona zbyt duża, gdyż wtedy algorytm działałby w sposób pseudolosowy
+		\item Prawdopodobieństwo krzyżowania -- zwiększa zakres zmian w populacji.
+	\end{itemize}
+	
+	
+	
+\end{document}
